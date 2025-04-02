@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Cart from './Cart'
 import { FaBox, FaShoppingCart, FaTachometerAlt, FaUsers } from "react-icons/fa";
 import {  dataLine,dataBar }  from '../assets/chartData'
@@ -7,12 +7,21 @@ import Order from './Order';
 import Charts from './Charts';
 import Message from './Message';
 import { NavLink } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import CustomerReviews from './CustomerReview';
 
 
 
 
-const Dashboard = () => {
+const Dashboard = ({token}) => {
+  useEffect(()=>{
+    if(token){
+      toast.success("Success Notification !", {
+        position: "top-right"
+      });
+    }
+  })
   return (
     <div className='grow p-8 bg-gray-100'>
      <div className='text-2xl mb-4'> Dashboard</div>
