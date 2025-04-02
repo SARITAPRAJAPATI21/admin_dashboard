@@ -52,9 +52,9 @@ export default function Login({settoken}) {
       
     } catch (error) {
       
-    }
- console.log("handle resett pass")
-
+   
+ console.log("Handle Reset error internal ")
+ }
   }
 
   return (
