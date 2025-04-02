@@ -12,7 +12,7 @@ import Login from "./components/Login";
 import { useState,useEffect } from "react";
 
 
-export const backendurl='https://admin-backend-psi-vert.vercel.app/api/user'
+export const backendurl='https://admin-backend-ib6a.vercel.app/api/user'
 
 
 function App() {
