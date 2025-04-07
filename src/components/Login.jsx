@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { backendurl } from "../App";
 
-export default function Login({settoken}) {
+export default function Login({ settoken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
@@ -13,49 +13,43 @@ export default function Login({settoken}) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      console.log("Handle login")
-      
-      const response = await axios.post(backendurl + "/login", {email,password});
-      toast.success("message login sucucess")
-      console.log(response)
-     
-      if(response.data.success){
-      
-        settoken(response.data.token)
-        console.log("message login sucucess")
-   
+      console.log("Handle login");
+
+      const response = await axios.post(backendurl + "api/user/login", {
+        email,
+        password,
+      });
+      toast.success("message login sucucess");
+      console.log(response);
+
+      if (response.data.success) {
+        settoken(response.data.token);
+        console.log("message login sucucess");
       }
-   
-   
     } catch (error) {
-     toast.error("Invalid Information")
+      toast.error("Invalid Information");
       console.log("Internal ");
     }
   };
-  const handleResetPass=async(e)=>{
+  const handleResetPass = async (e) => {
     e.preventDefault();
-    try { 
-      if(cpassword!==password){
-        toast.error("password must be same")
-      }
-      else{
-        console.log("reset password ")
-        const response = await axios.post(backendurl + "/reset", {email,cpassword});
-        if(response.status===200)
-        {
-          toast.success(response.data.message)
-          setvisible(false)
+    try {
+      if (cpassword !== password) {
+        toast.error("password must be same");
+      } else {
+        console.log("reset password ");
+        const response = await axios.post(backendurl + "/reset", {
+          email,
+          cpassword,
+        });
+        if (response.status === 200) {
+          toast.success(response.data.message);
+          setvisible(false);
         }
-
       }
-     
-      
-    } catch (error) {
-      
-    }
- console.log("handle resett pass")
-
-  }
+    } catch (error) {}
+    console.log("handle resett pass");
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -63,7 +57,7 @@ export default function Login({settoken}) {
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
           {visible == false ? "Login" : "Reset Password"}
         </h2>
-        <form onSubmit={visible==false?handleLogin :handleResetPass}>
+        <form onSubmit={visible == false ? handleLogin : handleResetPass}>
           <div className="mb-4">
             <label className="block text-gray-700">Email</label>
             <input
@@ -113,7 +107,7 @@ export default function Login({settoken}) {
             type="submit"
             className=" mt-2 w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
-            {visible?"Reset Password":"Login"}
+            {visible ? "Reset Password" : "Login"}
           </button>
           <ToastContainer />
         </form>

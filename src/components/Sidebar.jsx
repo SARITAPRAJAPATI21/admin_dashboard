@@ -9,7 +9,7 @@ const Sidebar = () => {
       <ul className="flex flex-col mt-5 text-xl">
       <NavLink to="/">
         <li className="flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-blue-500 hover:text-white">
-          <FaTachometerAlt  />
+          <FaTachometerAlt />
           <span className="hidden md:block">Dashboard</span>
         </li>
         </NavLink>
@@ -20,21 +20,27 @@ const Sidebar = () => {
         </li>
         </NavLink>
         <NavLink to="/charts">
-        <li className="flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-blue-500 hover:text-white">
+        <li className="  flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-blue-500 hover:text-white">
           <FaUsers />
           <span className="hidden md:block">Analytics</span>
         </li>
         </NavLink>
-        <NavLink to='/product'>
+        <NavLink to='/additem'>
         <li className="flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-blue-500 hover:text-white">
           <FaBox />
-          <span className="hidden md:block">Products</span>
+          <span className="hidden md:block">Add item</span>
         </li>
         </NavLink>
-        <NavLink to='/message'>
+        <NavLink to='/listitem'>
+        <li className="flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-blue-500 hover:text-white">
+          <FaBox />
+          <span className="hidden md:block">list item</span>
+        </li>
+        </NavLink>
+        <NavLink to='/users'>
         <li className="flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-blue-500 hover:text-white">
           <FaUsers />
-          <span className="hidden md:block">Message</span>
+          <span className="hidden md:block">users</span>
         </li>
         </NavLink>
         <NavLink to='/payment'>

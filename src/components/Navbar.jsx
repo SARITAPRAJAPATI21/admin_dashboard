@@ -14,11 +14,12 @@ const Navbar = ({settoken}) => {
      {
        (location.pathname=='/') 
        ?  <h1>Dashboard </h1>:
-        (location.pathname=='/orders'?  <h1>/orders </h1>:
-        (location.pathname=='/charts')?  <h1>/charts </h1>:
-        (location.pathname=='/product')?  <h1>/product management </h1>: 
-        (location.pathname=='/payment')?  <h1>/payment information </h1>: 
-        (location.pathname=='/message')?  <h1>/customer Queries </h1>: <h1>/report </h1>
+        (location.pathname=='/orders'?  <h1>orders </h1>:
+        (location.pathname=='/charts')?  <h1>charts </h1>:
+        (location.pathname=='/additem')?  <h1>product add </h1>: 
+        (location.pathname=='/listitem')?  <h1>product list </h1>: 
+        (location.pathname=='/payment')?  <h1>payment information </h1>: 
+        (location.pathname=='/users')?  <h1>users  </h1>: <h1>/report </h1>
         ) 
        }
        <div className='flex gap-10'>

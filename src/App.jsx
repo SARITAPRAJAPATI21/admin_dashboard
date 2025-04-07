@@ -5,14 +5,16 @@ import Message from "./components/Message";
 import Navbar from "./components/Navbar";
 import Order from "./components/Order";
 import Payment from "./components/Payment";
-import ProductForm from "./components/ProductForm";
+import ProductList from "./components/ProductList";
 import Sidebar from "./components/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import { useState,useEffect } from "react";
+import Additem from "./components/Additem";
+import User from "./components/User";
 
 
-export const backendurl='http://localhost:4000/api/user'
+export const backendurl='http://localhost:4000/'
 
 
 function App() {
@@ -36,11 +38,12 @@ function App() {
           <div>
             <Routes>
               
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/product" element={<ProductForm />} />
+              <Route path="/" element={<Dashboard  token={token}/>} />
+              <Route path="/additem" element={<Additem />} />
+              <Route path="/listitem" element={<ProductList />} />
               <Route path="/orders" element={<Order/>} />
               <Route path="/charts" element={<Charts />} />
-              <Route path="/message" element={<Message />} />
+              <Route path="/users" element={<User/>} />
               <Route path="/payment" element={<Payment />} />
               
           
