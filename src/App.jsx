@@ -14,7 +14,7 @@ import Additem from "./components/Additem";
 import User from "./components/User";
 
 
-export const backendurl='http://localhost:4000/'
+export const backendurl='https://admin-backend-ib6a.vercel.app/'
 
 
 function App() {
