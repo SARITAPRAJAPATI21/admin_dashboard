@@ -18,7 +18,7 @@ import Processing from "./components/Processing";
 import Cancel from "./components/Cancel";
 
 
-export const backendurl='http://localhost:4000/'
+export const backendurl='https://admin-backend-ib6a.vercel.app/'
 
 function App() {
 
