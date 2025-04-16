@@ -38,7 +38,7 @@ export default function Login({ settoken }) {
         toast.error("password must be same");
       } else {
         console.log("reset password ");
-        const response = await axios.post(backendurl + "/reset", {
+        const response = await axios.post(backendurl + "api/user/reset", {
           email,
           cpassword,
         });
@@ -46,9 +46,14 @@ export default function Login({ settoken }) {
           toast.success(response.data.message);
           setvisible(false);
         }
+       
       }
-    } catch (error) {}
-    console.log("handle resett pass");
+    } catch (error) {
+      toast.error("user not found");
+      
+      console.log("internal sever 404 handle reset");
+    }
+    
   };
 
   return (
@@ -88,21 +93,24 @@ export default function Login({ settoken }) {
                 onChange={(e) => setCPassword(e.target.value)}
                 required
               />
+
             </div>
           ) : (
             " "
           )}
           {visible == false ? (
+            
             <button
               onClick={() => setvisible(!visible)}
               className="text-sm font-semibold text-blue-500 pointer-cursor"
             >
               Forget password
             </button>
+            
           ) : (
             ""
           )}
-
+   
           <button
             type="submit"
             className=" mt-2 w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"

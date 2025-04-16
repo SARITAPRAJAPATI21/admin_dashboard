@@ -1,53 +1,94 @@
-import React from "react";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from 'react-router-dom';
+import { backendurl } from '../App';
 
-const orders = [
-  { id: 1, customer: "John Doe", date: "2025-03-27", status: "Pending", total: "$120.00" },
-  { id: 2, customer: "Jane Smith", date: "2025-03-26", status: "Completed", total: "$200.00" },
-  { id: 3, customer: "Mike Johnson", date: "2025-03-25", status: "Shipped", total: "$150.00" },
-];
 
-const Order = () => {
+const statuses = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
+
+export default function Order({setOrderId}) {
+  const [orders, setOrders] = useState([]);
+
+  const handleStatusChange = async(id, status) => {
+    try {
+       const response= await axios.post( backendurl+'api/order/update',{id,status})
+        console.log(response)
+        orderList()
+        if(response.status===200)
+          toast.success("status update successfully")
+
+    } catch (error) {
+      console.log("not update status")
+      toast.error("Not updated")
+      
+    }
+    
+  };
+
+  const orderList =async()=>{
+    try {
+       const response =await axios.get( backendurl+'api/order/list')
+       setOrders(response.data.list)
+     console.log(orders)
+    } catch (error) {
+      console.log(" erior")
+      
+    }
+  }
+  useEffect(()=>{
+    orderList();
+  
+  
+  },[])
+  //console.log(" order list", typeof orders)
+
+
   return (
-    <div className="container mx-auto p-4  shadow-md bg-white rounded-lg  my-10 ">
-      <h2 className="text-2xl font-semibold mb-4">Order List</h2>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Order Management</h1>
       <div className="overflow-x-auto">
-        <table className="w-full bg-white rounded-lg">
+        <table className="min-w-full table-auto  border-0 border-gray-200">
           <thead>
-            <tr className=" text-left">
-              <th className=" w-22 p-3  text-sm font-semibold tracking-wide text-left border-b">Order ID</th>
-              <th className="p-3 text-sm font-semibold tracking-wide text-left border-b">Customer</th>
-              <th className="  w-24 p-3  text-sm font-semibold tracking-wide text-left border-b">Date</th>
-              <th className=" w-24 p-3 text-sm font-semibold tracking-wide text-left  border-b">Status</th>
-              <th className="  w-32 p-3 text-sm font-semibold tracking-wide text-left border-b">Total</th>
+            <tr className="bg-blue-400 shadow-md">
+              <th className="px-4 py-2 border">Order ID</th>
+              <th className="px-4 py-2 border">Customer</th>
+              <th className="px-4 py-2 border">Product</th>
+              <th className="px-4 py-2 border">Amount</th>
+              <th className="px-4 py-2 border">Status</th>
+             <th className="px-4 py-2 border">Details</th>  
             </tr>
           </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50 border-b border-gray-200">
-                <td className="p-3 text-sm text-gray-700 whitespace-nowrap">{order.id}</td>
-                <td className="p-3 text-sm text-gray-700 whitespace-nowrap ">{order.customer}</td>
-                <td className="p-3 text-sm text-gray-700 whitespace-nowrap">{order.date}</td>
-                <td className="p-3 text-sm text-gray-700  whitespace-nowrap">
-                  <span
-                    className={`px-2 py-1 rounded text-xs font-medium ${
-                      order.status === "Completed"
-                        ? "bg-green-100 text-green-700"
-                        : order.status === "Shipped"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    }`}
+          <tbody className='bg-white shadow-md'>
+            {orders.map(order => (
+             <tr key={order._id} className="text-center">
+            
+                <td className="px-4 py-2 border  border-gray-300">{order._id}</td>
+                <td className="px-4 py-2 border  border-gray-300">{order.address.Name}</td>
+                <td className="px-4 py-2 border  border-gray-300">{order.items[0].name}</td>
+                <td className="px-4 py-2 border  border-gray-300">${order.amount}</td>
+                <td className="px-4 py-2 border  border-gray-300">
+                  <select
+                    className="border border-gray-300 rounded px-2 py-1"
+                    value={order.status}
+                    onChange={e => handleStatusChange(order._id, e.target.value)}
                   >
-                    {order.status}
-                  </span>
+                    {statuses.map(status => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
                 </td>
-                <td className="p-3 text-sm text-gray-700 whitespace-nowrap">{order.total}</td>
+                 <td className='text-blue-500 hover:text-white hover:bg-blue-500'><Link  to={`${order._id}`} onClick={()=> setOrderId(order._id)}>see more </Link>   </td> 
               </tr>
-            ))}
+             
+            ))} 
           </tbody>
+
         </table>
+        <ToastContainer/>
       </div>
     </div>
   );
-};
-
-export default Order;
+}

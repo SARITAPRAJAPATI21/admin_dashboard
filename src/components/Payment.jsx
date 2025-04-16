@@ -1,11 +1,31 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState,useEffect } from "react";
+import { backendurl } from "../App";
 
 export default function Payment() {
-  const [payments, setPayments] = useState([
-    { id: 1, customerId: "C001", productId: "P001", method: "Credit Card", price: "$100" },
-    { id: 2, customerId: "C002", productId: "P002", method: "PayPal", price: "$150" },
-    { id: 3, customerId: "C003", productId: "P003", method: "Bank Transfer", price: "$200" },
-  ]);
+  const [payments, setPayments] = useState([]);
+
+  
+
+  const fetchProcess= async()=>{
+    try {
+        const response = await axios.get(backendurl + "api/order/list");
+      console.log("response list", response.data.list)
+       const pen= response.data.list ;
+        const p= pen.filter(x=> x.status=='Delivered')
+      setPayments(p)
+
+        
+    } catch (error) {
+         console.log('error in payemt page',error)
+    }
+    
+  }
+  useEffect(()=>{
+    fetchProcess()
+  },[])
+   console.log(payments)
+    
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -22,11 +42,11 @@ export default function Payment() {
           </thead>
           <tbody>
             {payments.map((payment) => (
-              <tr key={payment.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-2 px-4 text-center">{payment.customerId}</td>
-                <td className="py-2 px-4 text-center">{payment.productId}</td>
-                <td className="py-2 px-4 text-center">{payment.method}</td>
-                <td className="py-2 px-4 text-center">{payment.price}</td>
+              <tr key={payment._id} className="border-b border-gray-200 ">
+                <td className="py-2 px-4 text-center">{payment.userId}</td>
+                <td className="py-2 px-4 text-center">{payment.items[0]._id}</td>
+                <td className="py-2 px-4 text-center">{payment.paymentMethod}</td>
+                <td className="py-2 px-4 text-center">${payment.items[0].price}</td>
               </tr>
             ))}
           </tbody>

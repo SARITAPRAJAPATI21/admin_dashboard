@@ -12,15 +12,25 @@ import Login from "./components/Login";
 import { useState,useEffect } from "react";
 import Additem from "./components/Additem";
 import User from "./components/User";
+import OrderId from "./components/OrderId";
+import axios from "axios";
+import Processing from "./components/Processing";
+import Cancel from "./components/Cancel";
 
 
 export const backendurl='http://localhost:4000/'
 
-
 function App() {
+
+   const[orderId,setOrderId]=useState('')
+  
   const [token ,settoken]=useState(localStorage.getItem('token')? localStorage.getItem('token'):'')
+
+ 
   useEffect(()=>{
    localStorage.setItem('token',token)
+
+
  
   },[token])
   return (
@@ -41,10 +51,15 @@ function App() {
               <Route path="/" element={<Dashboard  token={token}/>} />
               <Route path="/additem" element={<Additem />} />
               <Route path="/listitem" element={<ProductList />} />
-              <Route path="/orders" element={<Order/>} />
+              <Route path="/orders" element={<Order setOrderId={setOrderId}/>} />
               <Route path="/charts" element={<Charts />} />
               <Route path="/users" element={<User/>} />
               <Route path="/payment" element={<Payment />} />
+               
+              <Route path='/processing' element={<Processing/>} />
+               
+              <Route path='/cancel' element={<Cancel/>} />
+              <Route path='orders/:orderId' element={<OrderId />} />
               
           
             </Routes>
